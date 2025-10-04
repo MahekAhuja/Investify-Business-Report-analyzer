@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container">
+    <h2>Financial Dashboard</h2>
+    {% if reports %}
+        <table>
+            <thead>
+                <tr>
+                    <th>Company</th>
+                    <th>Revenue</th>
+                    <th>Expenses</th>
+                    <th>Net Profit</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for report in reports %}
+                <tr>
+                    <td>{{ report.company_name }}</td>
+                    <td>₹{{ "%.2f"|format(report.revenue) }}</td>
+                    <td>₹{{ "%.2f"|format(report.expenses) }}</td>
+                    <td>₹{{ "%.2f"|format(report.net_profit) }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <div class="chart">
+            <img src="{{ url_for('static', filename='financial_chart.png') }}" alt="Financial Chart">
+        </div>
+    {% else %}
+        <p>No reports uploaded yet. <a href="{{ url_for('upload_file') }}">Upload now</a>.</p>
+    {% endif %}
+</div>
+{% endblock %}
